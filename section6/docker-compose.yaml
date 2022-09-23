@@ -8,7 +8,20 @@ services:
       - MONGO_INITDB_ROOT_USERNAME: max
       - MONGO_INITDB_ROOT_PASSWORD: secret
   backend:
+    build: ./backend
+    ports:
+      - "80:80"
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - MONGODB_USERNAME: max
+      - MONGODB_PASSWORD: secret
+    depends_on:
+      - mongodb
   frontend:
 
 volumes:
   data:
+  logs:
